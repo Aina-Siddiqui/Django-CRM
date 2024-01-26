@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Records</h1>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" style="text-align: center;">ID</th>
+            <th scope="col" style="text-align: center;">Name</th>
+            <th scope="col" style="text-align: center;">Email</th>
+            <th scope="col" style="text-align: center;">Phone</th>
+            <th scope="col" style="text-align: center;">Address</th>
+            <th scope="col" style="text-align: center;">City</th>
+            <th scope="col" style="text-align: center;">State</th>
+            <th scope="col" style="text-align: center;">Zip Code</th>
+            <!--<th scope="col">Created At</th>-->
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% if records %}
+                {% for record in records %}
+            
+                    <tr>
+                        <td style="text-align: center;"><a href=" {% url 'record' record.id %}" style="text-decoration: none; color:black">
+                            {{record.id}}</a></td>
+                        <td style="text-align: center;">{{record.first_name}}
+                         {{record.last_name}}</td>
+                        <td style="text-align: center;">{{record.email}}</td>
+                        <td style="text-align: center;">{{record.phone}}</td>
+                        <td style="text-align: center;">{{record.address}}</td>
+                        <td style="text-align: center;">{{record.city}}</td>
+                        <td style="text-align: center;">{{record.state}}</td>
+                        <td style="text-align: center;">{{record.zip_code}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    
+           
+       
+{% else %}
+        <div class="col-md-6 offset-md-3 pt-6">
+    
+        <h1 class="col-md-3 offset-md-4">Login</h1>
+        <br>
+        <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <form>
+            <div class="mb-3">
+            
+            <input type="text" class="form-control"  name="Username" 
+            placeholder="Username" required>
+            
+            </div>
+            <div class="mb-3">
+            
+            <input type="password" class="form-control"  placeholder="Password" name="Password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-secondary col-md-3 offset-md-4 p-3">Login</button>
+        
+            </form>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
